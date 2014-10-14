@@ -3,26 +3,29 @@ define(['app/model'], function(model){
 
 
 	function render(){
-		var prev = model.last();
+		
 		c.clearRect(0, 0, canvas.width, canvas.height);
-		model.each(function(curr){
-			c.beginPath();
-			c.moveTo(prev.get('x'), prev.get('y'));
+		c.beginPath();
+		var prev = model.last();
+		c.moveTo(prev.get('x'), prev.get('y'));
+		model.each(function(curr) {
 			c.lineTo(curr.get('x'), curr.get('y'));
-			c.closePath();
-			c.stroke();
-			prev = curr;
 		});
+		c.closePath();
+		c.fillStyle = "gray";
+		c.fill();
+		c.stroke();
 		model.each(renderVertex);
 	}
 
 	function renderVertex(vertex){
 		var x = vertex.get('x'),
-			y = vertex.get('y'),
-			radius = vertex.radius;
+		y = vertex.get('y'),
+		radius = vertex.radius;
 		c.beginPath();
 		c.arc(x, y, radius, 0, 2 * Math.PI);
 		c.closePath();
+		c.fillStyle = "black";
 		c.fill();
 	}
 
